@@ -134,11 +134,13 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
         {
             if (position != 0)
             {
+                ((RecyclerSimpleViewHolder)holder).setData(mDatas.get(position-1));
                 onBindItemViewHolder((VH) holder, position-1);
             }
         }
         else
         {
+            ((RecyclerSimpleViewHolder)holder).setData(mDatas.get(position));
             onBindItemViewHolder((VH) holder, position);
         }
     }
@@ -209,9 +211,15 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
 
     protected abstract int getItemLayoutID(int viewType);
 
-    protected abstract void onBindItemViewHolder(VH holder, int index);
+    protected void onBindItemViewHolder(VH holder, int index)
+    {
 
-    protected abstract int getItemType(int position);
+    }
+
+    protected int getItemType(int position)
+    {
+        return 0;
+    }
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder)

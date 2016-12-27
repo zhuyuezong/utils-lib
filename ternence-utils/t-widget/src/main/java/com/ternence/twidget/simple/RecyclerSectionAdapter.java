@@ -153,7 +153,7 @@ public abstract class RecyclerSectionAdapter<K, T, SH extends RecyclerSimpleView
                 ((RecyclerSimpleViewHolder)holder).setData(sectionData);
                 onBindSectionView((SH) holder, sectionData);
                 break;
-            case TYPE_HEADER:
+            case TYPE_NORMAL:
                 T data = getItemData(position);
                 ((RecyclerSimpleViewHolder)holder).setData(data);
                 onBindItemViewHolder((VH) holder, data);
@@ -246,7 +246,13 @@ public abstract class RecyclerSectionAdapter<K, T, SH extends RecyclerSimpleView
 
     protected abstract SH createSectionView(View itemView);
 
-    protected abstract void onBindSectionView(SH holder, K sectionData);
+    protected void onBindSectionView(SH holder, K sectionData)
+    {
 
-    protected abstract void onBindItemViewHolder(VH holder, T data);
+    }
+
+    protected void onBindItemViewHolder(VH holder, T data)
+    {
+
+    }
 }

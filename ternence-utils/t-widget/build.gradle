@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "0.0.1"
+group = "com.ternence.twidget"                                        // Maven Group ID for the artifact
+version = "1.0.2"
 
 android {
     compileSdkVersion 24
@@ -11,7 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
+        versionCode 2
         versionName version
     }
     buildTypes {
@@ -24,9 +25,6 @@ android {
 
 def siteUrl = 'https://github.com/zhuyuezong/utils-lib'      // Homepage URL of the library
 def gitUrl = 'https://github.com/zhuyuezong/utils-lib.git'   // Git repository URL
-
-group = "com.ternence.twidget"                                        // Maven Group ID for the artifact
-version = "1.0.1"
 
 install {
     repositories.mavenInstaller {

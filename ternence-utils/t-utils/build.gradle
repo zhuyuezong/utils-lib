@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "0.0.1"
+group = "com.ternence.tutils"                                        // Maven Group ID for the artifact
+version = "1.0.1"
 
 android {
     compileSdkVersion 23
@@ -24,9 +25,6 @@ android {
 
 def siteUrl = 'https://github.com/zhuyuezong/utils-lib'      // Homepage URL of the library
 def gitUrl = 'https://github.com/zhuyuezong/utils-lib.git'   // Git repository URL
-
-group = "com.ternence.tutils"                                        // Maven Group ID for the artifact
-version = "1.0.1"
 
 install {
     repositories.mavenInstaller {

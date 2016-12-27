@@ -1,5 +1,6 @@
 package com.ternence.twidget.simple;
 
+import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,9 +21,15 @@ public class RecyclerSimpleViewHolder<T> extends RecyclerView.ViewHolder
         super(itemView);
     }
 
+    @CallSuper
     protected void setData(T data)
     {
         mData = data;
+    }
+
+    public T getData()
+    {
+        return mData;
     }
 
     public void onViewRecycled()
