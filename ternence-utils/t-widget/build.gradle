@@ -5,7 +5,7 @@ apply plugin: 'com.jfrog.bintray'
 version = "0.0.1"
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
     defaultConfig {
@@ -25,7 +25,7 @@ android {
 def siteUrl = 'https://github.com/zhuyuezong/utils-lib'      // Homepage URL of the library
 def gitUrl = 'https://github.com/zhuyuezong/utils-lib.git'   // Git repository URL
 
-group = "com.ternence.tutils"                                        // Maven Group ID for the artifact
+group = "com.ternence.twidget"                                        // Maven Group ID for the artifact
 version = "1.0.1"
 
 install {
@@ -34,7 +34,7 @@ install {
             project {
                 packaging 'aar'
 
-                name 'for some common utils, such as TimeUtils 、 StringUtils'
+                name 'some important widget'
                 url siteUrl
 
                 // Set your license
@@ -86,7 +86,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "lib.ternence.utils"    //发布到JCenter上的项目名字
+        name = "lib.ternence.widget"    //发布到JCenter上的项目名字
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
@@ -96,4 +96,5 @@ bintray {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:recyclerview-v7:24.2.0'
 }

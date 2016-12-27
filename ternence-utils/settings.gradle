@@ -1,1 +1,1 @@
-include ':app', ':t-utils'
+include ':app', ':t-utils', ':t-widget'
