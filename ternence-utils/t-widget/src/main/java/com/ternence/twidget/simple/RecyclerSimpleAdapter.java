@@ -26,7 +26,7 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
 
     private Context mContext;
 
-    private List<T> mDatas;
+    private final List<T> mDatas;
 
     private OnItemClickListener<VH> mItemClickListener;
 
@@ -34,8 +34,7 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
 
     public RecyclerSimpleAdapter(@NonNull Context context)
     {
-        this.mContext = context;
-        this.mDatas = new ArrayList<>();
+        this(context,null);
     }
 
     public RecyclerSimpleAdapter(@NonNull Context context, List<T> datas)
@@ -58,6 +57,11 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
         this.mHeaderView = viewHolder;
     }
 
+    protected Context getContext()
+    {
+        return mContext;
+    }
+
     public void setOnItemClickListener(OnItemClickListener<VH> onItemClickListener)
     {
         this.mItemClickListener = onItemClickListener;
@@ -73,8 +77,19 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
         return mHeaderView;
     }
 
+
     @Override
-    public RecyclerSimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public int getItemCount()
+    {
+        if (getHeaderView() != null)
+        {
+            return mDatas.size() + 1;
+        }
+        return mDatas.size();
+    }
+
+    @Override
+    public final RecyclerSimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         final RecyclerSimpleViewHolder viewHolder;
         if (viewType == TYPE_HEADER)
@@ -112,10 +127,6 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
         return viewHolder;
     }
 
-    protected abstract VH createItemViewHolder(View itemView, int viewType);
-
-    protected abstract int getItemLayoutID(int viewType);
-
     @Override
     public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
@@ -132,22 +143,75 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
         }
     }
 
-    protected abstract void onBindItemViewHolder(VH holder, int index);
-
-    @Override
-    public int getItemCount()
+    /**
+     * insert data and notify
+     * @param item data
+     * @param index the index of item in list without header view
+     */
+    public void insertItem(T item, int index)
     {
+        mDatas.add(index, item);
         if (getHeaderView() != null)
         {
-            return mDatas.size() + 1;
+            notifyItemInserted(index + 1);
         }
-        return mDatas.size();
+        else
+        {
+            notifyItemInserted(index);
+        }
     }
 
-    protected Context getContext()
+    /**
+     * remove data and notify
+     * @param index the index of item in list without header view
+     */
+    public void removeItem(int index)
     {
-        return mContext;
+        mDatas.remove(index);
+        if (getHeaderView() != null)
+        {
+            notifyItemRemoved(index + 1);
+        }
+        else
+        {
+            notifyItemRemoved(index);
+        }
     }
+
+    /**
+     * replace all data and refresh list
+     * @param datas datas
+     */
+    public void replaceAll(List<T> datas)
+    {
+        this.mDatas.clear();
+        if (datas != null)
+        {
+            this.mDatas.addAll(datas);
+        }
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public final int getItemViewType(int position)
+    {
+        if (getHeaderView() != null && position == 0)
+        {
+            return TYPE_HEADER;
+        }
+        else
+        {
+            return getHeaderView() != null ? getItemType(position -1) : getItemType(position);
+        }
+    }
+
+    protected abstract VH createItemViewHolder(View itemView, int viewType);
+
+    protected abstract int getItemLayoutID(int viewType);
+
+    protected abstract void onBindItemViewHolder(VH holder, int index);
+
+    protected abstract int getItemType(int position);
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder)
@@ -156,15 +220,5 @@ public abstract class RecyclerSimpleAdapter<T, VH extends RecyclerSimpleViewHold
         {
             ((RecyclerSimpleViewHolder) holder).onViewRecycled();
         }
-    }
-
-    public interface OnItemClickListener<VH>
-    {
-        void onItemClick(VH vh);
-    }
-
-    public interface OnItemLongClickListener<VH>
-    {
-        boolean onLongClick(VH vh);
     }
 }

@@ -20,7 +20,7 @@ public class RecyclerSimpleViewHolder<T> extends RecyclerView.ViewHolder
         super(itemView);
     }
 
-    public void setData(T data)
+    protected void setData(T data)
     {
         mData = data;
     }
