@@ -76,6 +76,10 @@ public abstract class RecyclerSectionAdapter<K, T, SH extends RecyclerSimpleView
         mSectionDatas.addAll(mDatas.keySet());
     }
 
+    /**
+     * set list's header
+     * @param viewHolder header
+     */
     public void setHeaderView(RecyclerSimpleViewHolder viewHolder)
     {
         this.mHeaderView = viewHolder;
